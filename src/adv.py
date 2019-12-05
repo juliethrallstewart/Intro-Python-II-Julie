@@ -1,15 +1,28 @@
 
 from player import Player
 from room import Room
+from item import Item
 
 import textwrap
 import random
+
+item = {
+    'torch': Item("torch", "A torch lights your path"),
+    'key': Item("key", "A large rusty key"),
+    'ale': Item("ale", "A goblet of ale"),
+    'mutton': Item("mutton", "A juicy large leg of lamb"),
+    'map': Item("map", "Old warn parchment map faintly marks the rumored treasure"),
+    'sword': Item("sword", "A broad gleaming sword hidden within an unremarkable scabbard"),
+    'rope': Item("rope", "50ft of thick rope"),
+    'shovel': Item("shovel", "A shovel"),
+    'coin': Item("coin", "A coin for your leather pouch")
+}
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons.", items=[item['torch']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -27,6 +40,8 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+
+
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -38,7 +53,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Link rooms to item
+
 #Main
 #
 
