@@ -25,7 +25,7 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-# print(room['outside'])
+
 
 # Link rooms together
 
@@ -42,17 +42,6 @@ room['treasure'].s_to = room['narrow']
 #Main
 #
 
-computer = random.randint(1,3)
-
-# if player_input == 'N':
-#         if player1.CurrentRoom.n_to:
-#             player1.CurrentRoom = player1.CurrentRoom.n_to
-#             print(player1.CurrentRoom)
-#         else:
-#             print('error N')
-
-# Make a new player object that is currently in the 'outside' room.
-
 player1 = Player("Bob", "magician", "male")
 
 
@@ -67,23 +56,48 @@ player1 = Player("Bob", "magician", "male")
 #
 # If the user enters "q", quit the game.
 def game(player): 
-    print(f"{player.player_name} your adventure begins {room[player.current_room]}!")
+    print(f"{player.player_name} your adventure begins at the {room[player.current_room]}!")
     while True:
         cmd = str(input("[n] North  [s] South   [e] East   [w] West    [q] Quit:\n"))
 
         if cmd == "n":
-            if room[player.current_room].n_to != None:
-                '''print the name and description of the player's current room'''
-                player.current_room = room[player.current_room].n_to
-                print(f"You are now in the {player.current_room}")
-            else: 
-                print("You must seek another direction!")
+            try:
+                enter_room_n = room[player.current_room].n_to
+                if player.current_room == "foyer":
+                    player.current_room = "overlook"
+                elif player.current_room == "outside": 
+                    player.current_room = "foyer"
+                elif player.current_room == "narrow":
+                    player.current_room = "treasure"
+                print(f"You are now in the {room[player.current_room]}")
+            except AttributeError:
+                 print("You must seek another direction!")
         elif cmd == "s":
-            print(f"{room[player.current_room]}")
+            try:
+                enter_room_s = room[player.current_room].s_to
+                if player.current_room == "overlook":
+                    player.current_room = "foyer"
+                elif player.current_room == "foyer":
+                    player.current_room = "outside"
+                elif player.current_room == "treasure":
+                    player.current_room = "narrow"
+                print(f"You are now in the {room[player.current_room]}")
+            except AttributeError:
+                 print("You must seek another direction!")
         elif cmd == "e":
-            print(f"{room[player.current_room]}")
+            try:
+                enter_room_e = room[player.current_room].e_to
+                player.current_room = "narrow"
+                print(f"You are now in the {room[player.current_room]}")
+            except AttributeError:
+                 print("You must seek another direction!")
         elif cmd == "w":
-            print(f"{room[player.current_room]}")
+            try:
+                enter_room_w = room[player.current_room].w_to
+                player.current_room = "foyer"
+                print(f"You are now in the {player.current_room},  {room[player.current_room]}")
+            except AttributeError:
+                 print("You must seek another direction!")
         elif cmd == "q":
             print(f"Goodbye!")
             break
