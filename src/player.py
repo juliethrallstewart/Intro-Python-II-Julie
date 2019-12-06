@@ -6,11 +6,9 @@ import sys
 
 
 class Player:
-    def __init__(self, player_name, role, sex, inventory=[]):
+    def __init__(self, player_name, inventory=[]):
         self.player_name = player_name
         self.current_room = 'outside'
-        self.role = role
-        self.sex = sex
         self.inventory = inventory
     
     def __str__(self):
@@ -23,7 +21,8 @@ class Player:
         self.inventory.remove(item)
 
     def show_inventory(self):
-        return f"Inventory: {self.inventory}"
+        for i in self.inventory: 
+            print(i)
 
 
 # p = Player("bob", "magician", "m")
